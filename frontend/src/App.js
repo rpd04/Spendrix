@@ -1,3 +1,4 @@
+import './App.css';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -41,78 +42,76 @@ function App() {
       .catch(error => console.log(error));
   };
 
-  return (
-    <div style={{ maxWidth: '600px', margin: '0 auto', padding: '20px' }}>
+return (
+    <div className="app">
       <h1>💰 Expense Tracker</h1>
 
-      <form onSubmit={handleSubmit}>
-        <div>
-          <input
-            type="text"
-            name="title"
-            placeholder="Title"
-            value={form.title}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <input
-            type="number"
-            name="amount"
-            placeholder="Amount"
-            value={form.amount}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <select name="category" value={form.category} onChange={handleChange}>
-            <option value="food">Food</option>
-            <option value="travel">Travel</option>
-            <option value="rent">Rent</option>
-            <option value="shopping">Shopping</option>
-            <option value="health">Health</option>
-            <option value="education">Education</option>
-            <option value="other">Other</option>
-          </select>
-        </div>
-        <div>
-          <input
-            type="date"
-            name="date"
-            value={form.date}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <input
-            type="text"
-            name="description"
-            placeholder="Description (optional)"
-            value={form.description}
-            onChange={handleChange}
-          />
-        </div>
-        <button type="submit">Add Expense</button>
+      <form className="expense-form" onSubmit={handleSubmit}>
+        <input
+          type="text"
+          name="title"
+          placeholder="Title"
+          value={form.title}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="number"
+          name="amount"
+          placeholder="Amount (₹)"
+          value={form.amount}
+          onChange={handleChange}
+          required
+        />
+        <select name="category" value={form.category} onChange={handleChange}>
+          <option value="food">Food</option>
+          <option value="travel">Travel</option>
+          <option value="rent">Rent</option>
+          <option value="shopping">Shopping</option>
+          <option value="health">Health</option>
+          <option value="education">Education</option>
+          <option value="other">Other</option>
+        </select>
+        <input
+          type="date"
+          name="date"
+          value={form.date}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="text"
+          name="description"
+          placeholder="Description (optional)"
+          value={form.description}
+          onChange={handleChange}
+        />
+        <button type="submit">+ Add Expense</button>
       </form>
 
       <h2>Your Expenses</h2>
-      {expenses.map(expense => (
-        <div key={expense.id} style={{ border: '1px solid #ccc', padding: '10px', marginBottom: '10px' }}>
-          <h3>{expense.title}</h3>
-          <p>₹{expense.amount} — {expense.category}</p>
-          <p>{expense.date}</p>
-          <p>{expense.description}</p>
-          <button 
-          onClick={() => handleDelete(expense.id)}
-          style={{ color: 'white', background: 'red', border: 'none', padding: '5px 10px', cursor: 'pointer' }}
->
-           Delete
-          </button>
-        </div>
-      ))}
+      {expenses.length === 0 ? (
+        <div className="empty">No expenses yet. Add one above!</div>
+      ) : (
+        expenses.map(expense => (
+          <div key={expense.id} className="expense-card">
+            <div className="expense-info">
+              <h3>{expense.title}</h3>
+              <span className="category-badge">{expense.category}</span>
+              <p>{expense.date} {expense.description && `· ${expense.description}`}</p>
+            </div>
+            <div style={{ textAlign: 'right' }}>
+              <div className="expense-amount">₹{expense.amount}</div>
+              <button
+                className="delete-btn"
+                onClick={() => handleDelete(expense.id)}
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        ))
+      )}
     </div>
   );
 }
