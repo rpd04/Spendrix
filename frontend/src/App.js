@@ -1,9 +1,14 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Login from './Login';
+import Register from './Register';
 
 function App() {
   const [expenses, setExpenses] = useState([]);
+  const [editingId, setEditingId] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));
+  const [showRegister, setShowRegister] = useState(false);
   const [form, setForm] = useState({
     title: '',
     amount: '',
@@ -13,11 +18,15 @@ function App() {
   });
 
   useEffect(() => {
-    fetchExpenses();
-  }, []);
+    if (isLoggedIn) fetchExpenses();
+  }, [isLoggedIn]);
+
+  const getAuthHeaders = () => ({
+    headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+  });
 
   const fetchExpenses = () => {
-    axios.get('http://127.0.0.1:8000/api/expenses/')
+    axios.get('http://127.0.0.1:8000/api/expenses/', getAuthHeaders())
       .then(response => setExpenses(response.data))
       .catch(error => console.log(error));
   };
@@ -28,23 +37,71 @@ function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://127.0.0.1:8000/api/expenses/', form)
-      .then(() => {
-        fetchExpenses();
-        setForm({ title: '', amount: '', category: 'food', date: '', description: '' });
-      })
-      .catch(error => console.log(error));
+    if (editingId) {
+      axios.put(`http://127.0.0.1:8000/api/expenses/${editingId}/`, form, getAuthHeaders())
+        .then(() => {
+          fetchExpenses();
+          setEditingId(null);
+          setForm({ title: '', amount: '', category: 'food', date: '', description: '' });
+        })
+        .catch(error => {
+  console.log(error.response.data);
+});
+    } else {
+      axios.post('http://127.0.0.1:8000/api/expenses/', form, getAuthHeaders())
+        .then(() => {
+          fetchExpenses();
+          setForm({ title: '', amount: '', category: 'food', date: '', description: '' });
+        })
+        .catch(error => {
+  console.log(error.response.data);
+});
+    }
   };
 
   const handleDelete = (id) => {
-    axios.delete(`http://127.0.0.1:8000/api/expenses/${id}/`)
+    axios.delete(`http://127.0.0.1:8000/api/expenses/${id}/`, getAuthHeaders())
       .then(() => fetchExpenses())
       .catch(error => console.log(error));
   };
 
-return (
+  const handleEdit = (expense) => {
+    setEditingId(expense.id);
+    setForm({
+      title: expense.title,
+      amount: expense.amount,
+      category: expense.category,
+      date: expense.date,
+      description: expense.description || ''
+    });
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setIsLoggedIn(false);
+    setExpenses([]);
+  };
+
+  if (!isLoggedIn) {
+    return showRegister
+      ? <Register onRegister={() => setShowRegister(false)} />
+      : <Login
+          onLogin={() => setIsLoggedIn(true)}
+          onShowRegister={() => setShowRegister(true)}
+        />;
+  }
+
+  return (
     <div className="app">
-      <h1>💰 Expense Tracker</h1>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <h1>💰 Expense Tracker</h1>
+        <button
+          onClick={handleLogout}
+          style={{ background: '#ff7675', color: 'white', border: 'none', padding: '8px 16px', borderRadius: '8px', cursor: 'pointer' }}
+        >
+          Logout
+        </button>
+      </div>
 
       <form className="expense-form" onSubmit={handleSubmit}>
         <input
@@ -86,7 +143,9 @@ return (
           value={form.description}
           onChange={handleChange}
         />
-        <button type="submit">+ Add Expense</button>
+        <button type="submit">
+          {editingId ? 'Update Expense' : '+ Add Expense'}
+        </button>
       </form>
 
       <h2>Your Expenses</h2>
@@ -102,6 +161,12 @@ return (
             </div>
             <div style={{ textAlign: 'right' }}>
               <div className="expense-amount">₹{expense.amount}</div>
+              <button
+                onClick={() => handleEdit(expense)}
+                style={{ background: '#6c5ce7', color: 'white', border: 'none', padding: '6px 14px', borderRadius: '8px', cursor: 'pointer', fontSize: '13px', marginRight: '6px' }}
+              >
+                Edit
+              </button>
               <button
                 className="delete-btn"
                 onClick={() => handleDelete(expense.id)}
