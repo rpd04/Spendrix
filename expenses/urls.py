@@ -1,7 +1,11 @@
 from rest_framework.routers import DefaultRouter
-from .views import ExpenseViewSet
+from django.urls import path
+from .views import ExpenseViewSet, BudgetViewSet, budget_summary
 
 router = DefaultRouter()
 router.register(r'expenses', ExpenseViewSet, basename='expense')
+router.register(r'budgets', BudgetViewSet, basename='budget')
 
-urlpatterns = router.urls
+urlpatterns = router.urls + [
+    path('budget-summary/', budget_summary, name='budget-summary'),
+]

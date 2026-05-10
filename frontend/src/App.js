@@ -3,12 +3,14 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Login from './Login';
 import Register from './Register';
+import Budget from './Budget';
 
 function App() {
   const [expenses, setExpenses] = useState([]);
   const [editingId, setEditingId] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));
   const [showRegister, setShowRegister] = useState(false);
+  const [refresh, setRefresh] = useState(0);
   const [form, setForm] = useState({
     title: '',
     amount: '',
@@ -41,27 +43,28 @@ function App() {
       axios.put(`http://127.0.0.1:8000/api/expenses/${editingId}/`, form, getAuthHeaders())
         .then(() => {
           fetchExpenses();
+          setRefresh(prev => prev + 1);
           setEditingId(null);
           setForm({ title: '', amount: '', category: 'food', date: '', description: '' });
         })
-        .catch(error => {
-  console.log(error.response.data);
-});
+        .catch(error => console.log(error.response.data));
     } else {
       axios.post('http://127.0.0.1:8000/api/expenses/', form, getAuthHeaders())
         .then(() => {
           fetchExpenses();
+          setRefresh(prev => prev + 1);
           setForm({ title: '', amount: '', category: 'food', date: '', description: '' });
         })
-        .catch(error => {
-  console.log(error.response.data);
-});
+        .catch(error => console.log(error.response.data));
     }
   };
 
   const handleDelete = (id) => {
     axios.delete(`http://127.0.0.1:8000/api/expenses/${id}/`, getAuthHeaders())
-      .then(() => fetchExpenses())
+      .then(() => {
+        fetchExpenses();
+        setRefresh(prev => prev + 1);
+      })
       .catch(error => console.log(error));
   };
 
@@ -94,7 +97,7 @@ function App() {
   return (
     <div className="app">
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <h1>💰 Expense Tracker</h1>
+        <h1>💰 SmartSpend</h1>
         <button
           onClick={handleLogout}
           style={{ background: '#ff7675', color: 'white', border: 'none', padding: '8px 16px', borderRadius: '8px', cursor: 'pointer' }}
@@ -147,6 +150,8 @@ function App() {
           {editingId ? 'Update Expense' : '+ Add Expense'}
         </button>
       </form>
+
+      <Budget refresh={refresh} />
 
       <h2>Your Expenses</h2>
       {expenses.length === 0 ? (
