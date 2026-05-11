@@ -4,6 +4,7 @@ import axios from 'axios';
 import Login from './Login';
 import Register from './Register';
 import Budget from './Budget';
+import Charts from './Charts';
 
 function App() {
   const [expenses, setExpenses] = useState([]);
@@ -85,6 +86,23 @@ function App() {
     setExpenses([]);
   };
 
+const handleExportCSV = () => {
+    axios.get('http://127.0.0.1:8000/api/export-csv/', {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+        responseType: 'blob'
+    })
+    .then(response => {
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'smartspend_expenses.csv');
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+    })
+    .catch(error => console.log(error));
+};
+
   if (!isLoggedIn) {
     return showRegister
       ? <Register onRegister={() => setShowRegister(false)} />
@@ -98,6 +116,12 @@ function App() {
     <div className="app">
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h1>💰 SmartSpend</h1>
+        <button
+          onClick={handleExportCSV}
+          style={{ background: '#00b894', color: 'white', border: 'none', padding: '8px 16px', borderRadius: '8px', cursor: 'pointer' }}
+        >
+          Export CSV
+        </button>
         <button
           onClick={handleLogout}
           style={{ background: '#ff7675', color: 'white', border: 'none', padding: '8px 16px', borderRadius: '8px', cursor: 'pointer' }}
@@ -152,7 +176,7 @@ function App() {
       </form>
 
       <Budget refresh={refresh} />
-
+      <Charts refresh={refresh} />
       <h2>Your Expenses</h2>
       {expenses.length === 0 ? (
         <div className="empty">No expenses yet. Add one above!</div>

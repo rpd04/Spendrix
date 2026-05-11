@@ -6,6 +6,8 @@ from django.db.models import Sum
 from .models import Expense, Budget
 from .serializers import ExpenseSerializer, BudgetSerializer
 import datetime
+import csv
+from django.http import HttpResponse
 
 class ExpenseViewSet(viewsets.ModelViewSet):
     serializer_class = ExpenseSerializer
@@ -62,3 +64,24 @@ def budget_summary(request):
         })
 
     return Response(summary)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def export_csv(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="smartspend_expenses.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow(['Title', 'Amount', 'Category', 'Date', 'Description'])
+
+    expenses = Expense.objects.filter(user=request.user).order_by('date')
+    for expense in expenses:
+        writer.writerow([
+            expense.title,
+            expense.amount,
+            expense.category,
+            expense.date,
+            expense.description or ''
+        ])
+
+    return response
