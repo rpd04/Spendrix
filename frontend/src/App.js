@@ -5,6 +5,7 @@ import Login from './Login';
 import Register from './Register';
 import Budget from './Budget';
 import Charts from './Charts';
+import Predictions from './Predictions';
 
 function App() {
   const [expenses, setExpenses] = useState([]);
@@ -177,6 +178,7 @@ const handleExportCSV = () => {
 
       <Budget refresh={refresh} />
       <Charts refresh={refresh} />
+      <Predictions refresh={refresh} />
       <h2>Your Expenses</h2>
       {expenses.length === 0 ? (
         <div className="empty">No expenses yet. Add one above!</div>
