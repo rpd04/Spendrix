@@ -34,7 +34,7 @@ function Charts({ refresh }) {
   });
 
   useEffect(() => {
-    axios.get('http://127.0.0.1:8000/api/expenses/', getAuthHeaders())
+    axios.get('https://smartspend-backend-wntp.onrender.com/api/expenses/', getAuthHeaders())
       .then(response => setExpenses(response.data))
       .catch(error => console.log(error));
   }, [refresh]);

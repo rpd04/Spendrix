@@ -19,13 +19,13 @@ function Budget({ refresh }) {
   }, [refresh]);
 
   const fetchBudgets = () => {
-    axios.get('http://127.0.0.1:8000/api/budgets/', getAuthHeaders())
+    axios.get('https://smartspend-backend-wntp.onrender.com/api/budgets/', getAuthHeaders())
       .then(response => setBudgets(response.data))
       .catch(error => console.log(error));
   };
 
   const fetchSummary = () => {
-    axios.get('http://127.0.0.1:8000/api/budget-summary/', getAuthHeaders())
+    axios.get('https://smartspend-backend-wntp.onrender.com/api/budget-summary/', getAuthHeaders())
       .then(response => {
         setSummary(response.data);
       })
@@ -40,7 +40,7 @@ function Budget({ refresh }) {
       month: today.getMonth() + 1,
       year: today.getFullYear()
     };
-    axios.post('http://127.0.0.1:8000/api/budgets/', data, getAuthHeaders())
+    axios.post('https://smartspend-backend-wntp.onrender.com/api/budgets/', data, getAuthHeaders())
       .then(() => {
         fetchBudgets();
         fetchSummary();

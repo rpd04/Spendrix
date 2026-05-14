@@ -8,7 +8,7 @@ function Register({ onRegister }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://127.0.0.1:8000/api/register/', { username, password })
+    axios.post('https://smartspend-backend-wntp.onrender.com/api/register/', { username, password })
       .then(() => onRegister())
       .catch(() => setError('Registration failed. Try a different username.'));
   };

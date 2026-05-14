@@ -10,7 +10,7 @@ function Predictions({ refresh }) {
   });
 
   useEffect(() => {
-    axios.get('http://127.0.0.1:8000/api/predictions/', getAuthHeaders())
+    axios.get('https://smartspend-backend-wntp.onrender.com/api/predictions/', getAuthHeaders())
       .then(response => {
         setData(response.data);
         setLoading(false);

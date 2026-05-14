@@ -30,7 +30,7 @@ function App() {
   });
 
   const fetchExpenses = () => {
-    axios.get('http://127.0.0.1:8000/api/expenses/', getAuthHeaders())
+    axios.get('https://smartspend-backend-wntp.onrender.com/api/expenses/', getAuthHeaders())
       .then(response => setExpenses(response.data))
       .catch(error => console.log(error));
   };
@@ -42,7 +42,7 @@ function App() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (editingId) {
-      axios.put(`http://127.0.0.1:8000/api/expenses/${editingId}/`, form, getAuthHeaders())
+      axios.put(`https://smartspend-backend-wntp.onrender.com/api/expenses/${editingId}/`, form, getAuthHeaders())
         .then(() => {
           fetchExpenses();
           setRefresh(prev => prev + 1);
@@ -51,7 +51,7 @@ function App() {
         })
         .catch(error => console.log(error.response.data));
     } else {
-      axios.post('http://127.0.0.1:8000/api/expenses/', form, getAuthHeaders())
+      axios.post('https://smartspend-backend-wntp.onrender.com/api/expenses/', form, getAuthHeaders())
         .then(() => {
           fetchExpenses();
           setRefresh(prev => prev + 1);
@@ -62,7 +62,7 @@ function App() {
   };
 
   const handleDelete = (id) => {
-    axios.delete(`http://127.0.0.1:8000/api/expenses/${id}/`, getAuthHeaders())
+    axios.delete(`https://smartspend-backend-wntp.onrender.com/api/expenses/${id}/`, getAuthHeaders())
       .then(() => {
         fetchExpenses();
         setRefresh(prev => prev + 1);
@@ -88,7 +88,7 @@ function App() {
   };
 
 const handleExportCSV = () => {
-    axios.get('http://127.0.0.1:8000/api/export-csv/', {
+    axios.get('https://smartspend-backend-wntp.onrender.com/api/export-csv/', {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
         responseType: 'blob'
     })
