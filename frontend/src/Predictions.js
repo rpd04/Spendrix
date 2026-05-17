@@ -31,7 +31,7 @@ function Predictions({ refresh }) {
       {/* Summary Cards */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '12px', marginBottom: '16px' }}>
         <div style={{ background: 'white', padding: '16px', borderRadius: '12px', boxShadow: '0 2px 8px rgba(0,0,0,0.06)', textAlign: 'center' }}>
-          <div style={{ fontSize: '22px', fontWeight: '600', color: '#6c5ce7' }}>₹{data.current_spending}</div>
+          <div style={{ fontSize: '22px', fontWeight: '600', color: '#00d4ff' }}>₹{data.current_spending}</div>
           <div style={{ fontSize: '12px', color: '#636e72', marginTop: '4px' }}>Spent this month</div>
         </div>
         <div style={{ background: 'white', padding: '16px', borderRadius: '12px', boxShadow: '0 2px 8px rgba(0,0,0,0.06)', textAlign: 'center' }}>

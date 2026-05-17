@@ -8,45 +8,45 @@ function Login({ onLogin, onShowRegister }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('https://smartspend-backend-wntp.onrender.com/api/token/', { username, password })
+    axios.post('https://smartspend-backend-dpli.onrender.com/api/token/', { username, password })
       .then(response => {
         localStorage.setItem('token', response.data.access);
         onLogin();
       })
-      .catch(() => setError('Invalid username or password'));
+      .catch(() => setError('Invalid credentials'));
   };
 
   return (
-    <div className="app">
-      <h1>💰 Expense Tracker</h1>
-      <form className="expense-form" onSubmit={handleSubmit}>
-        <h2 style={{ textAlign: 'center' }}>Login</h2>
-        {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
-        <input
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={e => setUsername(e.target.value)}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-          required
-        />
-        <button type="submit">Login</button>
-        <p style={{ textAlign: 'center', marginTop: '10px' }}>
+    <div className="auth-container">
+      <div className="auth-box">
+        <div className="auth-title">
+          <h1>SPENDRIX</h1>
+          <p>Personal Finance Analytics</p>
+        </div>
+        <div className="auth-subtitle" style={{ marginTop: '24px' }}>Sign In</div>
+        {error && <div className="error-msg">{error}</div>}
+        <form className="expense-form" onSubmit={handleSubmit}>
+          <input
+            type="text"
+            placeholder="Username"
+            value={username}
+            onChange={e => setUsername(e.target.value)}
+            required
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            required
+          />
+          <button type="submit">Sign In</button>
+        </form>
+        <div className="auth-link">
           Don't have an account?{' '}
-          <span
-            onClick={onShowRegister}
-            style={{ color: '#6c5ce7', cursor: 'pointer', fontWeight: '500' }}
-          >
-            Register here
-          </span>
-        </p>
-      </form>
+          <span onClick={onShowRegister}>Register here</span>
+        </div>
+      </div>
     </div>
   );
 }

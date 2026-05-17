@@ -50,8 +50,8 @@ function Charts({ refresh }) {
     datasets: [{
       data: Object.values(categoryTotals),
       backgroundColor: [
-        '#6c5ce7', '#00b894', '#fdcb6e', '#e17055', '#0984e3', '#a29bfe', '#fd79a8'
-      ],
+  '#00d4ff', '#0099bb', '#005f75', '#00eeff', '#0077aa', '#003d55', '#00ffcc'
+],
       borderWidth: 0
     }]
   };
@@ -69,7 +69,7 @@ function Charts({ refresh }) {
     datasets: [{
       label: 'Daily Spending (₹)',
       data: sortedDates.map(date => dailyTotals[date]),
-      backgroundColor: '#6c5ce7',
+      backgroundColor: '#00d4ff',
       borderRadius: 6
     }]
   };
@@ -88,8 +88,8 @@ function Charts({ refresh }) {
     datasets: [{
       label: 'Monthly Spending (₹)',
       data: sortedMonths.map(month => monthlyTotals[month]),
-      borderColor: '#6c5ce7',
-      backgroundColor: 'rgba(108, 92, 231, 0.1)',
+      borderColor: '#00d4ff',
+      backgroundColor: 'rgba(0, 212, 255, 0.1)',
       tension: 0.4,
       fill: true
     }]

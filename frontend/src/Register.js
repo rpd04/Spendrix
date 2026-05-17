@@ -8,33 +8,42 @@ function Register({ onRegister }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('https://smartspend-backend-wntp.onrender.com/api/register/', { username, password })
+    axios.post('https://smartspend-backend-dpli.onrender.com/api/register/', { username, password })
       .then(() => onRegister())
       .catch(() => setError('Registration failed. Try a different username.'));
   };
 
   return (
-    <div className="app">
-      <h1>💰 Expense Tracker</h1>
-      <form className="expense-form" onSubmit={handleSubmit}>
-        <h2 style={{ textAlign: 'center' }}>Register</h2>
-        {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
-        <input
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={e => setUsername(e.target.value)}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-          required
-        />
-        <button type="submit">Register</button>
-      </form>
+    <div className="auth-container">
+      <div className="auth-box">
+        <div className="auth-title">
+          <h1>SPENDRIX</h1>
+          <p>Personal Finance Analytics</p>
+        </div>
+        <div className="auth-subtitle" style={{ marginTop: '24px' }}>Create Account</div>
+        {error && <div className="error-msg">{error}</div>}
+        <form className="expense-form" onSubmit={handleSubmit}>
+          <input
+            type="text"
+            placeholder="Username"
+            value={username}
+            onChange={e => setUsername(e.target.value)}
+            required
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            required
+          />
+          <button type="submit">Create Account</button>
+        </form>
+        <div className="auth-link">
+          Already have an account?{' '}
+          <span onClick={onRegister}>Sign in here</span>
+        </div>
+      </div>
     </div>
   );
 }

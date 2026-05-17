@@ -71,7 +71,8 @@ function App() {
   };
 
   const handleEdit = (expense) => {
-    setEditingId(expense.id);
+    const expenseId = expense.id || expense._id;
+    setEditingId(expenseId);
     setForm({
       title: expense.title,
       amount: expense.amount,
@@ -114,23 +115,29 @@ const handleExportCSV = () => {
   }
 
   return (
-    <div className="app">
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <h1>💰 SmartSpend</h1>
-        <button
-          onClick={handleExportCSV}
-          style={{ background: '#00b894', color: 'white', border: 'none', padding: '8px 16px', borderRadius: '8px', cursor: 'pointer' }}
-        >
-          Export CSV
-        </button>
-        <button
-          onClick={handleLogout}
-          style={{ background: '#ff7675', color: 'white', border: 'none', padding: '8px 16px', borderRadius: '8px', cursor: 'pointer' }}
-        >
-          Logout
-        </button>
+    <>
+      <div className="header">
+        <div className="logo">
+          <div>
+            <h1>SPENDRIX</h1>
+            <span>Personal Finance Analytics</span>
+          </div>
+        </div>
+        <div style={{ display: 'flex', gap: '8px' }}>
+          <button
+            onClick={handleExportCSV}
+            style={{ background: 'transparent', color: '#00d4ff', border: '1px solid #00d4ff33', padding: '8px 16px', borderRadius: '6px', cursor: 'pointer', fontSize: '12px', fontWeight: '600', letterSpacing: '1px', textTransform: 'uppercase' }}
+          >
+            Export CSV
+          </button>
+          <button
+            onClick={handleLogout}
+            style={{ background: 'transparent', color: '#ff4757', border: '1px solid #ff475733', padding: '8px 16px', borderRadius: '6px', cursor: 'pointer', fontSize: '12px', fontWeight: '600', letterSpacing: '1px', textTransform: 'uppercase' }}
+          >
+            Logout
+          </button>
+        </div>
       </div>
-
       <form className="expense-form" onSubmit={handleSubmit}>
         <input
           type="text"
@@ -175,7 +182,6 @@ const handleExportCSV = () => {
           {editingId ? 'Update Expense' : '+ Add Expense'}
         </button>
       </form>
-
       <Budget refresh={refresh} />
       <Charts refresh={refresh} />
       <Predictions refresh={refresh} />
@@ -208,7 +214,7 @@ const handleExportCSV = () => {
           </div>
         ))
       )}
-    </div>
+    </>
   );
 }
 

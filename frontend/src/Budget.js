@@ -84,14 +84,14 @@ function Budget({ refresh }) {
           <div key={index} className="expense-card" style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', marginBottom: '8px' }}>
               <span style={{ fontWeight: '500', textTransform: 'capitalize' }}>{item.category}</span>
-              <span style={{ color: item.status === 'danger' ? '#d63031' : '#6c5ce7' }}>
+              <span style={{ color: item.status === 'danger' ? '#d63031' : '#00d4ff' }}>
                 ₹{item.spent} / ₹{item.budget}
               </span>
             </div>
             <div style={{ width: '100%', background: '#f0f2f5', borderRadius: '10px', height: '8px' }}>
               <div style={{
                 width: `${Math.min(item.percentage, 100)}%`,
-                background: item.status === 'danger' ? '#d63031' : '#6c5ce7',
+                background: item.status === 'danger' ? '#d63031' : '#00d4ff',
                 height: '8px',
                 borderRadius: '10px',
                 transition: 'width 0.3s'
