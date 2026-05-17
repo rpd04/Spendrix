@@ -122,12 +122,12 @@ function Charts({ refresh }) {
         </div>
       </div>
 
-      <div style={{ height: '200px', background: 'white', padding: '20px', borderRadius: '12px', boxShadow: '0 2px 8px rgba(0,0,0,0.06)', marginBottom: '16px' }}>
+      <div style={{ height: '100px', background: 'white', padding: '20px', borderRadius: '12px', boxShadow: '0 2px 8px rgba(0,0,0,0.06)', marginBottom: '16px' }}>
         <h3 style={{ marginBottom: '16px', color: '#2d3436' }}>Daily Spending</h3>
         <Bar data={barData} options={options} />
       </div>
 
-      <div style={{ height: '200px', background: 'white', padding: '20px', borderRadius: '12px', boxShadow: '0 2px 8px rgba(0,0,0,0.06)', marginBottom: '16px' }}>
+      <div style={{ height: '100px', background: 'white', padding: '20px', borderRadius: '12px', boxShadow: '0 2px 8px rgba(0,0,0,0.06)', marginBottom: '16px' }}>
         <h3 style={{ marginBottom: '16px', color: '#2d3436' }}>Monthly Trend</h3>
         <Line data={lineData} options={options} />
       </div>
