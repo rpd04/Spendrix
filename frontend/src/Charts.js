@@ -117,17 +117,17 @@ function Charts({ refresh }) {
 
       <div style={{ background: 'white', padding: '20px', borderRadius: '12px', boxShadow: '0 2px 8px rgba(0,0,0,0.06)', marginBottom: '16px' }}>
         <h3 style={{ marginBottom: '16px', color: '#2d3436' }}>Spending by Category</h3>
-        <div style={{ maxWidth: '300px', margin: '0 auto' }}>
+        <div style={{ maxWidth: '250px', margin: '0 auto' }}>
           <Pie data={pieData} options={options} />
         </div>
       </div>
 
-      <div style={{ background: 'white', padding: '20px', borderRadius: '12px', boxShadow: '0 2px 8px rgba(0,0,0,0.06)', marginBottom: '16px' }}>
+      <div style={{ height: '200px', background: 'white', padding: '20px', borderRadius: '12px', boxShadow: '0 2px 8px rgba(0,0,0,0.06)', marginBottom: '16px' }}>
         <h3 style={{ marginBottom: '16px', color: '#2d3436' }}>Daily Spending</h3>
         <Bar data={barData} options={options} />
       </div>
 
-      <div style={{ background: 'white', padding: '20px', borderRadius: '12px', boxShadow: '0 2px 8px rgba(0,0,0,0.06)', marginBottom: '16px' }}>
+      <div style={{ height: '200px', background: 'white', padding: '20px', borderRadius: '12px', boxShadow: '0 2px 8px rgba(0,0,0,0.06)', marginBottom: '16px' }}>
         <h3 style={{ marginBottom: '16px', color: '#2d3436' }}>Monthly Trend</h3>
         <Line data={lineData} options={options} />
       </div>
