@@ -148,8 +148,16 @@ The predictions engine (`expenses/ml.py`) uses statistical analysis to provide:
 
 ## Screenshots
 
-> Add screenshots of your app here after deployment
+## Screenshots
 
+### Login Page
+![Login](screenshots/Login.png)
+### Dashboard
+![Dashboard](screenshots/DashBoard.png)
+
+### Analytics
+![Analytics](screenshots/Analytics(1).png)
+![](screenshots/Analytics(2).png)
 ---
 
 ## Author

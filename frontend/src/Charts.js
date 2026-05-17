@@ -115,21 +115,29 @@ function Charts({ refresh }) {
     <div>
       <h2>Analytics</h2>
 
-      <div style={{ background: 'white', padding: '20px', borderRadius: '12px', boxShadow: '0 2px 8px rgba(0,0,0,0.06)', marginBottom: '16px' }}>
-        <h3 style={{ marginBottom: '16px', color: '#2d3436' }}>Spending by Category</h3>
-        <div style={{ maxWidth: '250px', margin: '0 auto' }}>
-          <Pie data={pieData} options={options} />
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px', marginBottom: '16px' }}>
+        
+        <div style={{ background: '#0f1628', padding: '16px', borderRadius: '8px', border: '1px solid #1e2d45' }}>
+          <h3>By Category</h3>
+          <div style={{ height: '200px' }}>
+            <Pie data={pieData} options={{ ...options, maintainAspectRatio: false }} />
+          </div>
         </div>
-      </div>
 
-      <div style={{ height: '100px', background: 'white', padding: '20px', borderRadius: '12px', boxShadow: '0 2px 8px rgba(0,0,0,0.06)', marginBottom: '16px' }}>
-        <h3 style={{ marginBottom: '16px', color: '#2d3436' }}>Daily Spending</h3>
-        <Bar data={barData} options={options} />
-      </div>
+        <div style={{ background: '#0f1628', padding: '16px', borderRadius: '8px', border: '1px solid #1e2d45' }}>
+          <h3>Daily Spending</h3>
+          <div style={{ height: '200px' }}>
+            <Bar data={barData} options={{ ...options, maintainAspectRatio: false }} />
+          </div>
+        </div>
 
-      <div style={{ height: '100px', background: 'white', padding: '20px', borderRadius: '12px', boxShadow: '0 2px 8px rgba(0,0,0,0.06)', marginBottom: '16px' }}>
-        <h3 style={{ marginBottom: '16px', color: '#2d3436' }}>Monthly Trend</h3>
-        <Line data={lineData} options={options} />
+        <div style={{ background: '#0f1628', padding: '16px', borderRadius: '8px', border: '1px solid #1e2d45' }}>
+          <h3>Monthly Trend</h3>
+          <div style={{ height: '200px' }}>
+            <Line data={lineData} options={{ ...options, maintainAspectRatio: false }} />
+          </div>
+        </div>
+
       </div>
     </div>
   );
