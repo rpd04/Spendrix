@@ -146,7 +146,6 @@ The predictions engine (`expenses/ml.py`) uses statistical analysis to provide:
 
 ---
 
-## Screenshots
 
 ## Screenshots
 
